@@ -1,0 +1,107 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <title>Sentiment Analysis Twitter</title>
+    <style>
+      .tambah{
+        padding-top: 100px;
+        margin:auto;
+      }
+      .container{
+        padding-top: 30px;
+      }
+      .tambah2{
+        padding-top: 10px;
+      }
+      footer{
+        width:100%;
+        height:50px;
+        line-height: 50px;
+        background-color: #333;
+        color: #aaa;
+        font-size: 1em;
+        position:absolute;
+        bottom:0px;
+      }
+      .a{
+        margin-right: 10px;
+      }
+      
+    </style>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['Positive',   {{ result_positive }}],
+          ['Negative',   {{ result_negative }}],
+          ['Neutral',    {{ result_neutral }}],
+        ]);
+
+        var options = {
+          title: 'Pie Chart'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+  </head>
+
+  <body>
+      <div class="col-12 col-md-10 col-lg-8 tambah">
+        <form class="card card-sm" method = "POST">
+          {% csrf_token %}
+          <div class="card-body row no-gutters align-items-center">
+                <div class="col-auto"><i class="fas fa-search h4 text-body"></i></div>
+                <div class="col a">
+                	<input class="form-control form-control-lg form-control-borderless" type="text" placeholder="Search" aria-label="Search" name = "searchcompany" required>
+                </div>
+                <div><button class="btn btn-lg btn-success" type="submit">Search</button></div>
+          		
+          </div>
+        </form>
+      </div>
+
+      <div class="container">
+        <h4 class="pad col-sm-12 alert alert-info">
+            <strong>{{ compnay_name }}</strong>
+        </h4>
+        <div class="row tambah2">
+          <div class="col-md-4">
+	           <ul>
+  	            <li><strong>Requested Tweet Count:</strong> {{ tweet_count }}</li>
+  	            <li><strong>Retrieved Tweet Count:</strong> {{ retrieve_count }}</li>
+  					    <li><strong>Positive:</strong> {{ result_positive }} %</li>
+  					    <li><strong>Negative:</strong> {{ result_negative }} %</li>
+  					    <li><strong>Neutral:</strong> {{ result_neutral }} %</li>
+			       </ul>
+          </div>
+          <div class="col-md-4" id="piechart"></div>
+        </div>
+      </div> 
+
+    <!-- Footer -->
+    <footer class="navbar-fixed-bottom">
+      <div class="text-center">© 2020 Copyright :
+        <a href="https://github.com/Vputri"> VIKA PUTRI ARIYANTI</a>
+      </div>
+  </footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
